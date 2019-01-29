@@ -1,0 +1,5 @@
+Rawbot.deployed().then(r=>r.setDeviceSpawnerAddress('0x5ee84ce0bb4df9eec4cf3d75e5380f2f93db52bd'))
+Rawbot.deployed().then(r=>r.setIPFSAddress('0x637c6f411aecae11cccb458f2033783f4a52e41c'))
+
+
+web3.eth.sendTransaction({from: web3.eth.accounts[6],to: '0xb6E948d9deC3078eefe67477E062db25BA0d5f58',value: '95000000000000000000'});

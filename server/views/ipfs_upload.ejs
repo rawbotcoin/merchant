@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico"/>
+    <title>Rawbot</title>
+</head>
+
+<body>
+<%- include('./partials/navbar.ejs') %>
+<div class="container-fluid">
+    <form id="uploadForm1" class="col-md-4 center lower" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar"/>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    <form id="uploadForm2" class="col-md-4 center lower" action="/decrypt" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar"/>
+        <button type="submit" class="btn btn-primary">Decrypt</button>
+    </form>
+</div>
+<%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico" />
+    <link href="./bootstrap-toggle/css/bootstrap-toggle.css" rel="stylesheet">
+    <title>Rawbot</title>
+</head>
+
+<body>
+    <%- include('./partials/navbar.ejs') %>
+    <div class="container">
+        <p class="center lower">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deviceAddModal">Add device
+            </button>
+        </p>
+
+        <table class="table table-bordered table-hover table-stats custom_background lower">
+            <thead>
+                <tr>
+                    <th scope="col">Address</th>
+                    <th scope="col">Serial number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Information</th>
+                    <th scope="col" colspan="2">Actions</th>
+                    <th scope="col">IPFS</th>
+                </tr>
+
+            </thead>
+            <tbody id="device_manager_content">
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Add action modal -->
+    <div class="modal fade" id="deviceAddModal" tabindex="-1" role="dialog" aria-labelledby="modalAddActionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add device</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="device_manager_address">Manager address</label>
+                        <input type="text" class="form-control" id="device_manager_address" placeholder="Enter the device manager address">
+                        <small id="managerAddressHelp" class="form-text text-muted">Import current address: <a href="#"
+                                onclick="App.importCurrentAddress()">here</a></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="device_serial_number">Serial number</label>
+                        <input type="text" class="form-control" id="device_serial_number" placeholder="Enter the device serial number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="device_description_input">Description</label>
+                        <input type="text" class="form-control" id="device_description_input" placeholder="Enter a valid JSON url: https://pastebin.com/raw/iQVDCZRP">
+                        <small id="jsonHelp" class="form-text text-muted">JSON example: <a href="https://pastebin.com/raw/iQVDCZRP"
+                                target="_blank">here</a></small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Name</label>
+                                <input type="text" class="form-control" id="device_name" placeholder="Enter the device name">
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Owner name</label>
+                                <input type="text" class="form-control" id="device_owner" placeholder="Enter the device's owner name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Country</label>
+                                <input type="text" class="form-control" id="device_country" placeholder="Enter the device's country">
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Location</label>
+                                <input type="text" class="form-control" id="device_location" placeholder="Enter the device's location">
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Accuracy</label>
+                                <input type="text" class="form-control" id="device_accuracy" placeholder="Enter the device's accuracy">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Latitude</label>
+                                <input type="text" class="form-control" id="device_latitude" placeholder="Enter the device's latitude">
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Altitude</label>
+                                <input type="text" class="form-control" id="device_altitude" placeholder="Enter the device's altitude">
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group">
+                                <label for="device_name">Longitude</label>
+                                <input type="text" class="form-control" id="device_longitude" placeholder="Enter the device's longitude">
+                            </div>
+                        </div>
+                    </div>
+                    <p id="tx_hash_addDevice"></p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="add_device_button">Add device</button>
+                    <button type="button" class="btn btn-primary" id="fill_location_button">Fill location</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add action modal -->
+    <div class="modal fade" id="deviceAddActionModal" tabindex="-1" role="dialog" aria-labelledby="modalAddActionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddActionLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="action_name">Action Name</label>
+                        <input type="text" class="form-control" id="action_name" placeholder="Enter the action name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="action_price">Action Price</label>
+                        <input type="number" class="form-control" id="action_price" placeholder="Enter the action price">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="action_occurences">Action Occurrences</label>
+                        <input type="number" class="form-control" id="action_occurences" placeholder="Enter the action occurences">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="action_duration">Action Duration</label>
+                        <input type="number" class="form-control" id="action_duration" placeholder="Enter the action duration">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="action_recurring">Action Recurring</label>
+                        <input type="checkbox" checked data-toggle="toggle" id="action_recurring">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="action_refundable">Action Refundable</label>
+                        <input type="checkbox" checked data-toggle="toggle" id="action_refundable">
+                    </div>
+                    <div class="form-group">
+                        <p id="tx_hash_addAction"></p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="add_action_button">Add action</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add action modal -->
+    <div class="modal fade" id="deviceAddIPFSActionModal" tabindex="-1" role="dialog" aria-labelledby="modalAddActionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add IPFS action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ipfs_action_name">Action Name</label>
+                        <input type="text" class="form-control" id="ipfs_action_name" placeholder="Enter the ipfs action name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ipfs_action_price">Action Price</label>
+                        <input type="number" class="form-control" id="ipfs_action_price" placeholder="Enter the ipfs action price">
+                    </div>
+                    <div class="form-group">
+                        <p id="tx_hash_addAction"></p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="add_ipfs_action_button">Add action</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+    <script src="./bootstrap-toggle/js/bootstrap-toggle.js"></script>
+
+</body>
+
+</html>
